@@ -15,6 +15,7 @@ document.getElementById("app").innerHTML = `
 
 // FETCH
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+// https://alligator.io/js/fetch-api/
 
 fetch("FETCH_URL")
   .then(res => res.json()) // .json() returns a promise
@@ -30,35 +31,45 @@ fetch("FETCH_URL")
 
 (async () => {
   try {
-    const SEARCH_QUERY = "Romance";
+    const SEARCH_QUERY = "javascript";
     const SEARCH_URL = "https://openlibrary.org/search.json?q=";
     const API_URL = `${SEARCH_URL}${SEARCH_QUERY}`;
 
     const res = await fetch(API_URL);
     const data = await res.json();
-    console.log(data);
+    const titles = data.docs.map(doc => doc.title);
+    console.log(titles);
   } catch (error) {
     console.error("Error message: ", error.message);
   }
 })();
 
 // GET
-const getData = async () => {
+const USERAPI_URL = "https://jsonplaceholder.typicode.com/users";
+const getUsers = async url => {
   try {
-    const SEARCH_QUERY = "Romance";
-    const SEARCH_URL = "https://openlibrary.org/search.json?q=";
-    const API_URL = `${SEARCH_URL}${SEARCH_QUERY}`;
-
-    const res = await fetch(API_URL);
+    const res = await fetch(url);
     let data = await res.json();
-    data = data.docs.map(doc => doc.title);
+    data = data.map(user => user.username);
     console.log(data);
   } catch (error) {
     console.error("Error message: ", error);
   }
 };
 
-console.log(getData());
+console.log(getUsers(USERAPI_URL));
+
+// Or... return promise from aync/await and chain .then calls
+async function fetchUsers(endpoint) {
+  const res = await fetch(endpoint);
+  const data = await res.json();
+
+  return data;
+}
+
+fetchUsers(USERAPI_URL).then(data => {
+  console.log(data.map(user => user.username));
+});
 
 // POST or 'PUT'
 // const userData = { username: "example" };
