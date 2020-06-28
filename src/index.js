@@ -10,6 +10,7 @@ document.getElementById("app").innerHTML = `
 `;
 
 // FETCH
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
 const SEARCH_QUERY = "Romance";
 const SEARCH_URL = "https://openlibrary.org/search.json?q=";
